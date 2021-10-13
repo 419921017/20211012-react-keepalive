@@ -13,6 +13,7 @@ function cacheReducer(cacheStates, action) {
           reactElement: payload.reactElement,
           status: cacheTypes.CREATE,
           doms: undefined, // 此虚拟dom对应的真实dom, 是个数组
+          scrolls: {}, // 滚动信息保存对象, 默认是key滚动的dom, 值是滚动的位置
         },
       };
     case cacheTypes.CREATED:
@@ -24,7 +25,14 @@ function cacheReducer(cacheStates, action) {
           doms: payload.doms, // 此虚拟dom对应的真实dom, 是个数组
         },
       };
-
+    case cacheTypes.DESTORY:
+      return {
+        ...cacheStates,
+        [cacheId]: {
+          ...cacheStates[cacheId],
+          status: cacheTypes.DESTORY,
+        },
+      };
     default:
       return cacheStates;
   }
